@@ -1,0 +1,90 @@
+[{
+  "name": "6",
+  "value": "6px",
+  "idx": 0
+}, {
+  "name": "8",
+  "value": "8px",
+  "idx": 1
+}, {
+  "name": "9",
+  "value": "9px",
+  "idx": 2
+}, {
+  "name": "10",
+  "value": "10px",
+  "idx": 3
+}, {
+  "name": "11",
+  "value": "11px",
+  "idx": 4
+}, {
+  "name": "12",
+  "value": "12px",
+  "idx": 5
+}, {
+  "name": "14",
+  "value": "14px",
+  "idx": 6
+},
+{
+  "name": "16",
+  "value": "16px",
+  "idx": 7
+},
+{
+  "name": "18",
+  "value": "18px",
+  "idx": 8
+},
+{
+  "name": "24",
+  "value": "24px",
+  "idx": 9
+},
+{
+  "name": "30",
+  "value": "30px",
+  "idx": 10
+},
+{
+  "name": "36",
+  "value": "36px",
+  "idx": 11
+},
+{
+  "name": "48",
+  "value": "48px",
+  "idx": 12
+},
+{
+  "name": "60",
+  "value": "60px",
+  "idx": 13
+},
+{
+  "name": "72",
+  "value": "72px",
+  "idx": 14
+},
+{
+  "name": "84",
+  "value": "84px",
+  "idx": 15
+},
+{
+  "name": "96",
+  "value": "96px",
+  "idx": 16
+},
+{
+  "name": "108",
+  "value": "108px",
+  "idx": 17
+},
+{
+  "name": "120",
+  "value": "120px",
+  "idx": 18
+}
+]
