@@ -128,15 +128,7 @@ import Box from "./components/box.vue";
 import boxText from "./components/text.vue";
 import List from "./components/select.vue";
 import html2canvas from "html2canvas";
-// import demoImg from "./assert/haibao.jpg";
-// import demoImg from "./assert/abc.jpg";
-import fmList from "./configs/fm-list.json";
 import fsList from "./configs/fs-list.json";
-import figureList from "./configs/figure-list.json";
-import clipList from "./configs/clip-list.json";
-import mosaicList from "./configs/mosaic-list.json";
-import filterList from "./configs/filter-list.json";
-import urlList from "../static/test/config.json";
 import $ from 'jquery'
 let DATA = {
   timeMachine: null,
@@ -165,53 +157,6 @@ export default {
       canvasImg:'',
       showImg:false,
       arry:{},
-      // arry: {
-      //   canvasW: 680,
-      //   canvasH: 1701,
-      //   text: [
-      //     {
-      //       text: "双击编辑1",
-      //       width: 200,
-      //       height: 30,
-      //       fontSize: "",
-      //       left: 20,
-      //       top: 20,
-      //       color: "red",
-      //       fontFamily: "宋体",
-      //       canDrag: false
-      //     },
-      //     {
-      //       text: "全场满减",
-      //       width: 304,
-      //       height: 77,
-      //       left: 187,
-      //       top: 668,
-      //       fontSize: "",
-      //       color: "white",
-      //       fontFamily: "FZshangKuS-R-GB",
-      //       canDrag: false
-      //     }
-      //   ],
-      //   box: [
-      //     {
-      //       width: 200,
-      //       height: 200,
-      //       left: 200,
-      //       top: 200,
-      //       clipCanDrag: false,
-      //       url:''
-      //     },
-      //     {
-      //       width: 200,
-      //       height: 200,
-      //       left: 500,
-      //       top: 500,
-      //       borderW: 2,
-      //       clipCanDrag: false,
-      //       url:''
-      //     }
-      //   ]
-      // },
       // init main style
       toolWrapperMargin: 10,
       toolBarH: 40,
@@ -251,26 +196,6 @@ export default {
       clipClickX: 0,
       clipClickY: 0,
 
-      // mosaic style
-      mosaicBorderW: 1,
-      mosaicW: 200,
-      mosaicH: 200,
-      mosaicL: 10,
-      mosaicT: 10,
-
-      // figure style
-      figureBorderW: 1,
-      figureW: 200,
-      figureH: 200,
-      figureL: 10,
-      figureT: 10,
-      figureAlpha: 0.5,
-      figureColors: {
-        hex: "#9E4949"
-      },
-      lineColors: {
-        hex: "#000000"
-      },
       borderR: 0,
 
       // action state
@@ -292,7 +217,6 @@ export default {
       textToPointer: null,
       textShowColorPicker: false,
       textShowShadowColorPicker: false,
-      textFmList: fmList,
       textfsList: fsList,
       textFmNow: 0,
       textLine: 1,
@@ -303,7 +227,6 @@ export default {
       textFont: 30,
       // clip state
       clipCanDrag: false,
-      clipList: clipList,
       clipNow: 0,
 
       // blur state
@@ -313,18 +236,14 @@ export default {
 
       // mosaic state
       mosaicCanDrag: false,
-      mosaicList: mosaicList,
       mosaicNow: 0,
 
       // figure state
       figureCanDrag: false,
       figureShowShadowColorPicker: false,
       figureLineShowShadowColorPicker: false,
-      figureList: figureList,
       figureNow: 0,
 
-      // filter state
-      filterList: filterList,
       filterNow: 0,
 
       // data url
@@ -334,13 +253,6 @@ export default {
   },
 
   watch: {
-    textFz(val, old) {
-      this.backToOld(val, old, "fz");
-    },
-
-    textFmNow(val, old) {
-      this.backToOld(val, old, "fm");
-    },
     textH() {
       return this.textFont + "px";
     }
@@ -363,31 +275,6 @@ export default {
           "px"
       };
     },
-
-    toolWrapperSty() {
-      return {
-        height: this.toolBarH + this.enhanceBarH + this.toolBarMargin + "px",
-        marginBottom:
-          this.canvasH < this.minCanvasH
-            ? (this.minCanvasH - this.canvasH + this.toolWrapperMargin) / 2 +
-              "px"
-            : this.toolWrapperMargin + "px"
-      };
-    },
-
-    funcSty() {
-      return {
-        height: this.toolBarH + "px",
-        marginBottom: this.toolBarMargin + "px"
-      };
-    },
-
-    enhanceSty() {
-      return {
-        height: this.enhanceBarH + "px"
-      };
-    },
-
     editSty() {
       return {
         width: this.canvasW + "px",
@@ -397,28 +284,6 @@ export default {
           : "transparent"
       };
     },
-
-    // style text
-    // textSty() {
-    //   // var h = document.getElementsByClassName('textarea')[0]
-    //   // if(h){
-    //   //   this.textHeight = h.offsetHeight
-    //   // }
-    //   return {
-    //     left: this.textL + 'px',
-    //     top: this.textT + 'px',
-    //     color: this.textColors.hex,
-    //     width: this.textW + 'px',
-    //     // height:this.textHeight + 'px',
-    //     // height: this.textTextGroup.length > 0 ? (Number(this.textFz) * this.textTextGroup.length + this.textBorder * 2) + 'px' : (Number(this.textFz) + this.textBorder * 2) + 'px',
-    //     borderW: this.textBorder + 'px',
-    //     fontSize: this.textFz + 'px',
-    //     // lineHeight: this.textFz + 'px',
-    //     fontFamily: this.textFmList[this.textFmNow].value,
-    //     opacity: this.textAlpha,
-    //     textShadow: ((!this.shadowX) && (!this.shadowY)) ? 'none' : this.shadowX + 'px ' + this.shadowY + 'px ' + this.shadowBlur + 'px ' + this.shadowColors.hex
-    //   }
-    // },
     Sty() {
       return {
         left: this.textL + "px",
@@ -431,19 +296,7 @@ export default {
         //height: this.textTextGroup.length > 0 ? (Number(this.textFz) * this.textTextGroup.length + this.textBorder * 2) + 'px' : (Number(this.textFz) + this.textBorder * 2) + 'px',
         borderW: this.textBorder + "px",
         lineHeight: this.textH + "px",
-        fontFamily: this.textFmList[this.textFmNow].value,
         opacity: this.textAlpha
-      };
-    },
-    colorInputSty() {
-      return {
-        background: this.textColors.hex
-      };
-    },
-
-    shadowColorInputSty() {
-      return {
-        background: this.shadowColors.hex
       };
     },
 
@@ -459,27 +312,6 @@ export default {
       };
     },
 
-    blurRangeSty() {
-      return {
-        width: this.blurRangeW + "px"
-      };
-    },
-
-    mosaicSty() {
-      return {
-        width: this.mosaicW - this.mosaicBorderW * 2 + "px",
-        height: this.mosaicH - this.mosaicBorderW * 2 + "px",
-        backgroundImage:
-          this.mosaicUrl == null ? "none" : "url(" + this.mosaicUrl + ")",
-        backgroundPosition:
-          -this.mosaicL -
-          this.mosaicBorderW +
-          "px " +
-          (-this.mosaicT - this.mosaicBorderW) +
-          "px"
-      };
-    },
-
     figureSty() {
       return {
         width: this.figureW - this.figureBorderW * 2 + "px",
@@ -491,18 +323,6 @@ export default {
         borderRadius: this.figureNow == 0 ? "0" : "50%"
       };
     },
-
-    colorFigureInputSty() {
-      return {
-        background: this.figureColors.hex
-      };
-    },
-
-    colorLineInputSty() {
-      return {
-        background: this.lineColors.hex
-      };
-    },
     // class
     // class text
     textCla() {
@@ -512,10 +332,6 @@ export default {
         disabled: !this.textContenteditable
       };
     },
-    // state
-    blurRation() {
-      return this.blurRangeW / this.blurMax;
-    }
   },
   created() {
     debugger
@@ -552,14 +368,6 @@ export default {
       };
       content = reader.readAsDataURL(localFile, "UTF-8");
     },
-    detail() {
-      debugger;
-      console.log(this.arry.text[1].text);
-    },
-    handleAvatarSuccess(res, file) {
-      debugger;
-      this.url = res.data.imgUrl;
-    },
     // upload image
     init(url) {
       let img = new Image();
@@ -588,7 +396,16 @@ export default {
       };
       img.src = url;
     },
-
+    reset() {
+      if (!this.canPaint) return false;
+      this.url = null;
+      this.mosaicUrl = null;
+      DATA.ctx.put(DATA.timeMachine.init());
+      DATA.timeMachine.reset();
+      DATA.mosaicCtx = null;
+      DATA.beforeBlur = null;
+      DATA.beforeFilter = null;
+    },
     drop(e) {
       let url = URL.createObjectURL(e.dataTransfer.files[0]);
       this.init(url);
@@ -597,172 +414,6 @@ export default {
     open(e) {
       let url = URL.createObjectURL(e.target.files[0]);
       this.init(url);
-    },
-
-    // text
-    toggleText() {
-      if (!this.canPaint) return false;
-      if (this.showMosaic) this.paintMosaic();
-      if (this.showBlur) this.paintBlur();
-      if (this.showFilter) this.paintFilter();
-      if (this.showFigure) this.paintFigure();
-      this.resetFunc();
-      this.showText = true;
-      this.textW =
-        DATA.ctx.textGroupW(
-          this.textTextGroup,
-          this.textFz,
-          this.textFmList[this.textFmNow].value,
-          this.textMinW
-        ) +
-        this.textBorder * 2;
-    },
-
-    textMouseDown(e) {
-      this.textCanDrag = true;
-      this.textToPointer = getPointerToElem(e, this.$refs.text);
-    },
-
-    textDouble() {
-      this.textContenteditable = true;
-      this.textTextGroup = [];
-      this.textText = "";
-      this.textW =
-        DATA.ctx.textGroupW(
-          this.textTextGroup,
-          this.textFz,
-          this.textFmList[this.textFmNow].value,
-          this.textMinW
-        ) +
-        this.textBorder * 2;
-    },
-
-    textInput() {
-      debugger;
-      let beyond, maxString;
-      this.textTextGroup = this.textText.split("\n");
-      this.textW =
-        DATA.ctx.textGroupW(
-          this.textTextGroup,
-          this.textFz,
-          this.textFmList[this.textFmNow].value,
-          this.textMinW
-        ) +
-        this.textBorder * 2;
-    },
-
-    backToOld(val, old, type) {
-      let beyondW, beyondH;
-      this.textW =
-        DATA.ctx.textGroupW(
-          this.textTextGroup,
-          this.textFz,
-          this.textFmList[this.textFmNow].value,
-          this.textMinW
-        ) +
-        this.textBorder * 2;
-      this.$nextTick(function() {
-        beyondW =
-          getElemOffset(this.$refs.canvas, this.$refs.text).left +
-          this.textW -
-          this.canvasW;
-        beyondH =
-          getElemOffset(this.$refs.canvas, this.$refs.text).top - this.canvasH;
-        beyondH =
-          getElemOffset(this.$refs.canvas, this.$refs.text).top +
-          parseFloat(this.textSty.height) -
-          this.canvasH;
-        if (beyondW > 0 || beyondH > 0) {
-          if (type == "fz") {
-            this.textFz = old;
-          }
-          if (type == "fm") {
-            this.textFmNow = old;
-          }
-        }
-      });
-    },
-
-    toggleColorPicker() {
-      this.textShowColorPicker = !this.textShowColorPicker;
-    },
-
-    toggleShadowColorPicker() {
-      this.textShowShadowColorPicker = !this.textShowShadowColorPicker;
-    },
-
-    onColorChange(val) {
-      this.textColors.hex = val.hex;
-    },
-
-    onShadowColorChange(val) {
-      this.shadowColors.hex = val.hex;
-    },
-
-    paintText() {
-      for (var i = 0; i < this.arry.text.length; i++) {
-        debugger;
-        DATA.ctx.text(
-          this.arry.text[i].text,
-          // this.arry.text[i].left,
-          187,
-          668,
-          // this.arry.text[i].top + this.arry.text[i].height-4,
-          this.arry.text[i].color,
-          parseFloat(this.arry.text[i].fontSize) ||
-            parseFloat(this.arry.text[i].height) - 2,
-          this.arry.text[i].fontFamily
-        );
-      }
-      for (var i = 0; i < this.arry.box.length; i++) {
-        DATA.ctx.url(
-          0,
-          0,
-          0,
-          0,
-          Number(this.arry.box[i].left),
-          Number(this.arry.box[i].top),
-          Number(this.arry.box[i].width),
-          Number(this.arry.box[i].height),
-          this.arry.box[i].url
-        );
-      }
-      DATA.timeMachine.add();
-    },
-
-    resetText() {
-      this.showText = false;
-      this.textContenteditable = false;
-      this.textTextGroup = [];
-      this.textText = "双击编辑";
-      this.textL = 10;
-      this.textT = 10;
-      this.textColors.hex = "#ffffff";
-      this.shadowColors.hex = "#000000";
-      this.textFz = 18;
-      this.textFmNow = 0;
-      this.textShowColorPicker = false;
-      this.shadowY = 0;
-      this.shadowX = 0;
-      this.shadowBlur = 0;
-      this.textAlpha = 1;
-      this.textLine = 1;
-
-      this.textW = 200;
-      this.textH = 30;
-      this.textNow = 0;
-    },
-
-    // clip
-    toggleClip() {
-      if (!this.canPaint) return false;
-      this.url = DATA.ctx.url();
-      if (this.showMosaic) this.paintMosaic();
-      if (this.showText && this.textContenteditable) this.paintText();
-      if (this.showBlur) this.paintBlur();
-      if (this.showFigure) this.paintFigure();
-      this.resetFunc();
-      this.showClip = true;
     },
 
     boxChange(status) {
@@ -807,221 +458,6 @@ export default {
     resetpage() {
       window.window.location.reload();
     },
-    downloadClip() {
-      if (this.clipNow == 0)
-        DATA.ctx.downloadRect(this.clipL, this.clipT, this.clipW, this.clipH);
-      if (this.clipNow == 1)
-        DATA.ctx.downloadArc(this.clipW, this.clipH, this.clipL, this.clipT);
-    },
-
-    resetClip() {
-      this.showClip = false;
-      this.clipL = 10;
-      this.clipT = 10;
-      this.clipW = 200;
-      this.clipH = 200;
-      this.clipNow = 0;
-      this.showClipSelect = false;
-    },
-
-    // blur
-    toggleBlur() {
-      if (!this.canPaint) return false;
-      if (this.showMosaic) this.paintMosaic();
-      if (this.showText && this.textContenteditable) this.paintText();
-      if (this.showFigure) this.paintFigure();
-      this.resetFunc();
-      this.showBlur = true;
-      DATA.beforeBlur = DATA.ctx.get();
-    },
-
-    blurInput(e) {
-      let r = Math.floor(e.target.value / this.blurRation);
-      let coped = copy(DATA.beforeBlur);
-      DATA.ctx.put(coped);
-      DATA.ctx.blur(r);
-    },
-
-    paintBlur() {
-      this.url = DATA.ctx.url();
-      DATA.timeMachine.add();
-    },
-
-    resetBlur() {
-      this.showBlur = false;
-      this.blur = 0;
-    },
-
-    // mosaic
-    toggleMosaic() {
-      if (!this.canPaint) return false;
-      if (this.showText && this.textContenteditable) this.paintText();
-      if (this.showBlur) this.paintBlur();
-      if (this.showFigure) this.paintFigure();
-      this.resetFunc();
-      this.showMosaic = true;
-      this.setMosaic(this.mosaicList[this.mosaicNow].value);
-    },
-
-    mosaicChange(status) {
-      this.mosaicW = status.width;
-      this.mosaicH = status.height;
-      this.mosaicL = status.left;
-      this.mosaicT = status.top;
-    },
-
-    setMosaic(value) {
-      let canvas = document.createElement("canvas");
-      canvas.width = this.canvasW;
-      canvas.height = this.canvasH;
-      DATA.mosaicCtx = new CanvasHelper(canvas);
-      DATA.mosaicCtx.put(DATA.ctx.get());
-      DATA.mosaicCtx.mosaic(value);
-      this.mosaicUrl = DATA.mosaicCtx.url();
-    },
-
-    mosaicSelect() {
-      this.setMosaic(this.mosaicList[this.mosaicNow].value);
-    },
-
-    paintMosaic() {
-      DATA.ctx.mosaic(
-        this.mosaicList[this.mosaicNow].value,
-        this.mosaicL,
-        this.mosaicT,
-        this.mosaicW,
-        this.mosaicH
-      );
-      DATA.timeMachine.add();
-      this.url = DATA.ctx.url();
-    },
-
-    resetMosaic() {
-      this.showMosaic = false;
-      this.mosaicL = 10;
-      this.mosaicT = 10;
-      this.mosaicW = 200;
-      this.mosaicH = 200;
-      this.mosaicNow = 0;
-      this.showMosaicSelect = false;
-    },
-
-    toggleFigure() {
-      if (!this.canPaint) return false;
-      if (this.showText && this.textContenteditable) this.paintText();
-      if (this.showBlur) this.paintBlur();
-      if (this.showMosaic) this.paintMosaic();
-      this.resetFunc();
-      this.showFigure = true;
-    },
-
-    toggleFigureColorPicker() {
-      this.figureShowShadowColorPicker = !this.figureShowShadowColorPicker;
-    },
-
-    toggleLineColorPicker() {
-      this.figureLineShowShadowColorPicker = !this
-        .figureLineShowShadowColorPicker;
-    },
-
-    onFigureColorChange(val) {
-      this.figureColors.hex = val.hex;
-    },
-
-    onLineColorChange(val) {
-      this.lineColors.hex = val.hex;
-    },
-
-    figureChange(status) {
-      this.figureW = status.width;
-      this.figureH = status.height;
-      this.figureL = status.left;
-      this.figureT = status.top;
-    },
-
-    figureInputChange(id) {
-      this.borderR = id == 0 ? "0" : "50%";
-    },
-
-    paintFigure() {
-      let color = this.figureColors.hex;
-      let linecolor = this.lineColors.hex;
-      let alpha = this.figureAlpha;
-      if (this.figureNow == 0) {
-        DATA.ctx.rect(
-          this.figureL,
-          this.figureT,
-          this.figureW,
-          this.figureH,
-          this.figureBorderW,
-          color,
-          linecolor,
-          alpha
-        );
-      } else {
-        DATA.ctx.arc(
-          this.figureL + this.figureW / 2,
-          this.figureT + this.figureH / 2,
-          this.figureW / 2,
-          this.figureH / 2,
-          this.figureBorderW,
-          color,
-          linecolor,
-          alpha
-        );
-      }
-      DATA.timeMachine.add();
-    },
-
-    resetFigure() {
-      this.showFigure = false;
-      this.figureL = 10;
-      this.figureT = 10;
-      this.figureW = 200;
-      this.figureH = 200;
-      this.figureNow = 0;
-      this.showFigureSelect = false;
-      this.figureAlpha = 0.5;
-      this.figureBorderW = 1;
-      this.figureColors.hex = "#9E4949";
-      this.lineColors.hex = "#000000";
-      this.borderR = 0;
-    },
-
-    // filter
-    toggleFilter() {
-      if (!this.canPaint) return false;
-      if (this.showText && this.textContenteditable) this.paintText();
-      if (this.showBlur) this.paintBlur();
-      if (this.showFigure) this.paintFigure();
-      if (this.showMosaic) this.paintMosaic();
-      this.resetFunc();
-      this.showFilter = true;
-      DATA.beforeFilter = DATA.ctx.get();
-    },
-
-    paintFilter() {
-      this.url = DATA.ctx.url();
-      DATA.timeMachine.add();
-    },
-
-    resetFilter() {
-      this.showFilter = false;
-      this.filterNow = 0;
-    },
-
-    filterSelect() {
-      let coped;
-      this.$nextTick(function() {
-        coped = copy(DATA.beforeFilter);
-        if (this.filterNow == 0) {
-          DATA.ctx.put(DATA.beforeFilter);
-        } else {
-          DATA.ctx.put(coped);
-          DATA.ctx[this.filterList[this.filterNow].name]();
-        }
-      });
-    },
 
     // mask
     maskClick(e) {
@@ -1038,46 +474,6 @@ export default {
       for (var i = 0; i < Allpoint.length; i++) {
         Allpoint[i].style.display = "none";
       }
-    },
-    // reset and download
-    resetFunc() {
-      if (this.showText) this.resetText();
-      if (this.showClip) this.resetClip();
-    },
-
-    stage(name) {
-      debugger;
-      if (!this.canPaint) return false;
-      if (this.showBlur) DATA.ctx.put(DATA.beforeBlur);
-      if (this.showFilter) DATA.ctx.put(DATA.beforeFilter);
-      if (
-        this.showText ||
-        this.showClip ||
-        this.showBlur ||
-        this.showMosaic ||
-        this.showFigure ||
-        this.showFilter
-      ) {
-        this.resetFunc();
-        return;
-      }
-      if (name == "undo") {
-        DATA.ctx.put(DATA.timeMachine.undo());
-      } else {
-        DATA.ctx.put(DATA.timeMachine.restore());
-      }
-    },
-
-    reset() {
-      if (!this.canPaint) return false;
-      this.resetFunc();
-      this.url = null;
-      this.mosaicUrl = null;
-      DATA.ctx.put(DATA.timeMachine.init());
-      DATA.timeMachine.reset();
-      DATA.mosaicCtx = null;
-      DATA.beforeBlur = null;
-      DATA.beforeFilter = null;
     },
     hideImg(){
       this.showImg = false
@@ -1132,47 +528,6 @@ export default {
       save_link.dispatchEvent(event);
     }
   }
-  // mounted() {
-  //   let d = document;
-  //   let offset, left, top, moveT, moveL;
-
-  //   ["dragleave", "drop", "dragenter", "dragover"].forEach(name =>
-  //     document.body.addEventListener(name, e => e.preventDefault())
-  //   );
-
-  //   d.addEventListener("mousemove", e => {
-  //     if (this.textCanDrag) {
-  //       offset = getPointerToElem(e, this.$refs.canvas);
-  //       left = offset.left - this.textToPointer.left;
-  //       top = offset.top - this.textToPointer.top;
-  //       moveL = this.canvasW - parseFloat(this.textSty.width);
-  //       // moveT = this.canvasH;
-  //       moveT = this.canvasH - parseFloat(this.textSty.height);
-  //       if (left >= 0 && left <= moveL) {
-  //         this.textL = left;
-  //       } else {
-  //         if (left < 0) {
-  //           this.textL = 0;
-  //         } else {
-  //           this.textL = moveL;
-  //         }
-  //       }
-  //       if (top >= 0 && top <= moveT) {
-  //         this.textT = top;
-  //       } else {
-  //         if (top < 0) {
-  //           this.textT = 0;
-  //         } else {
-  //           this.textT = moveT;
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   d.addEventListener("mouseup", () => {
-  //     this.textCanDrag = false;
-  //   });
-  // }
 };
 </script>
 <style>
