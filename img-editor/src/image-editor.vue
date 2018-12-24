@@ -38,52 +38,54 @@
         </div>
       </el-header>
       <el-main>
-        <div id="image-editor" :style="imageEditorSty">
-          <a id="download-link" class="hide"></a>
-          <div class="panel" :style="editSty">
-            <canvas :width="canvasW" :height="canvasH" ref="canvas"></canvas>
-            <div class="mask" :style="editSty" @drop.prevent="drop" @click="maskClick">
-              <boxText
-                v-if="arry.text"
-                v-for="(item,index) in arry.text"
-                :index="index"
-                :key="index"
-                contenteditable="true"
-                :width="item.width"
-                :height="item.height"
-                :show="showText"
-                :fs="item.fontSize"
-                :left="item.left"
-                :top="item.top"
-                :fontFamily="item.fontFamily"
-                :color="item.color"
-                :text="item.text"
-                :canvasW="arry.canvasW"
-                :canvasH="arry.canvasH"
-                :canDrag="item.canDrag"
-                :canvas="$refs.canvas"
-                @textClick="textClick"
-                @textChange="textChange"
-                style="outline:none;white-space:nowrap;"
-              ></boxText>
-              <Box
-                v-if="arry.box"
-                v-for="(item,index) in arry.box"
-                :show="showClip"
-                :Imgindex="index"
-                :key="index"
-                :backgroundImage="item.url"
-                :width="item.width"
-                :height="item.height"
-                :left="item.left"
-                :top="item.top"
-                :canvasW="arry.canvasW"
-                :canvasH="arry.canvasH"
-                @boxClick="boxClick"
-                :canDrag="item.clipCanDrag"
-                :canvas="$refs.canvas"
-                @boxChange="boxChange"
-              ></Box>
+        <div class="wrap" @click="maskClick">
+          <div id="image-editor" :style="imageEditorSty">
+            <a id="download-link" class="hide"></a>
+            <div class="panel" :style="editSty">
+              <canvas :width="canvasW" :height="canvasH" ref="canvas"></canvas>
+              <div class="mask" :style="editSty" @drop.prevent="drop">
+                <boxText
+                  v-if="arry.text"
+                  v-for="(item,index) in arry.text"
+                  :index="index"
+                  :key="index"
+                  contenteditable="true"
+                  :width="item.width"
+                  :height="item.height"
+                  :show="showText"
+                  :fs="item.fontSize"
+                  :left="item.left"
+                  :top="item.top"
+                  :fontFamily="item.fontFamily"
+                  :color="item.color"
+                  :text="item.text"
+                  :canvasW="arry.canvasW"
+                  :canvasH="arry.canvasH"
+                  :canDrag="item.canDrag"
+                  :canvas="$refs.canvas"
+                  @textClick="textClick"
+                  @textChange="textChange"
+                  style="outline:none;white-space:nowrap;"
+                ></boxText>
+                <Box
+                  v-if="arry.box"
+                  v-for="(item,index) in arry.box"
+                  :show="showClip"
+                  :Imgindex="index"
+                  :key="index"
+                  :backgroundImage="item.url"
+                  :width="item.width"
+                  :height="item.height"
+                  :left="item.left"
+                  :top="item.top"
+                  :canvasW="arry.canvasW"
+                  :canvasH="arry.canvasH"
+                  @boxClick="boxClick"
+                  :canDrag="item.clipCanDrag"
+                  :canvas="$refs.canvas"
+                  @boxChange="boxChange"
+                ></Box>
+              </div>
             </div>
           </div>
         </div>
@@ -129,7 +131,7 @@ import boxText from "./components/text.vue";
 import List from "./components/select.vue";
 import html2canvas from "html2canvas";
 import fsList from "./configs/fs-list.json";
-import $ from 'jquery'
+import $ from "jquery";
 let DATA = {
   timeMachine: null,
   ctx: null,
@@ -148,15 +150,15 @@ export default {
   },
   data() {
     return {
-      demoImg:'',
+      demoImg: "",
       fmvalue: "",
       fsvalue: "",
       cshow: false,
       helpshow: false,
       activeName: "1",
-      canvasImg:'',
-      showImg:false,
-      arry:{},
+      canvasImg: "",
+      showImg: false,
+      arry: {},
       // init main style
       toolWrapperMargin: 10,
       toolBarH: 40,
@@ -331,21 +333,21 @@ export default {
         abled: this.textContenteditable,
         disabled: !this.textContenteditable
       };
-    },
+    }
   },
   created() {
-    debugger
+    debugger;
     var a = this.$route.query.url;
     this.demoImg = decodeURIComponent(a);
-    var publicUrl = this.demoImg
-    var l = publicUrl.lastIndexOf('/')+1 
-    publicUrl =publicUrl.substring(0,l);
+    var publicUrl = this.demoImg;
+    var l = publicUrl.lastIndexOf("/") + 1;
+    publicUrl = publicUrl.substring(0, l);
     this.init(this.demoImg);
-    var b = $.ajax({url:publicUrl+"config.json",async:false})
-    var obj = JSON.parse(b.responseText)
-    this.arry = obj
-    for(var i=0;i<this.arry.box.length;i++){
-       this.arry.box[i].url = publicUrl + obj.box[i].url
+    var b = $.ajax({ url: publicUrl + "config.json", async: false });
+    var obj = JSON.parse(b.responseText);
+    this.arry = obj;
+    for (var i = 0; i < this.arry.box.length; i++) {
+      this.arry.box[i].url = publicUrl + obj.box[i].url;
     }
   },
   methods: {
@@ -461,30 +463,32 @@ export default {
 
     // mask
     maskClick(e) {
-      if (e.target.className !== "mask") return false;
-      var Alltextbox = document.getElementsByClassName("box-text");
-      var Allbox = document.getElementsByClassName("box");
-      var Allpoint = document.getElementsByClassName("point");
-      for (var i = 0; i < Alltextbox.length; i++) {
-        Alltextbox[i].style.border = "none";
-      }
-      for (var i = 0; i < Allbox.length; i++) {
-        Allbox[i].style.border = "none";
-      }
-      for (var i = 0; i < Allpoint.length; i++) {
-        Allpoint[i].style.display = "none";
+      debugger;
+      if (e.target.className == "wrap" || e.target.className == "mask") {
+        var Alltextbox = document.getElementsByClassName("box-text");
+        var Allbox = document.getElementsByClassName("box");
+        var Allpoint = document.getElementsByClassName("point");
+        for (var i = 0; i < Alltextbox.length; i++) {
+          Alltextbox[i].style.border = "none";
+        }
+        for (var i = 0; i < Allbox.length; i++) {
+          Allbox[i].style.border = "none";
+        }
+        for (var i = 0; i < Allpoint.length; i++) {
+          Allpoint[i].style.display = "none";
+        }
       }
     },
-    hideImg(){
-      this.showImg = false
+    hideImg() {
+      this.showImg = false;
     },
-    priviewCanvas(){
-      debugger
-       var _this = this;
+    priviewCanvas() {
+      debugger;
+      var _this = this;
       var imgEditor = document.getElementsByClassName("panel")[0];
       html2canvas(imgEditor).then(function(canvas) {
         _this.canvasImg = canvas.toDataURL("image/jpeg", 1.0);
-        _this.showImg = true
+        _this.showImg = true;
       });
     },
     download() {
@@ -687,6 +691,13 @@ export default {
   top: 0;
   left: 0;
   padding: 50px 0;
+}
+.wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 

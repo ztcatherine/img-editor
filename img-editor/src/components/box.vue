@@ -188,7 +188,6 @@ export default {
     let offset, left, top, moveL, moveT;
     d.addEventListener("mousemove", e => {
       if (this.boxCanDrag) {
-        debugger
         offset = getPointerToElem(e, this.canvas);
         left = offset.left - this.boxToPointer.left;
         top = offset.top - this.boxToPointer.top;
