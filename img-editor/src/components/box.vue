@@ -4,7 +4,7 @@
     <span class="point" @mousedown="pointMouseDown('RT')"></span>
     <span class="point" @mousedown="pointMouseDown('LB')"></span>
     <span class="point" @mousedown="pointMouseDown('RB')"></span>
-    <slot></slot>
+    <slot></slot> 
   </div>
 </template>
 <script>
@@ -33,8 +33,8 @@ export default {
     return {
       boxW: this.width,
       boxH: this.height,
-      boxL: this.top,
-      boxT: this.left,
+      boxL: this.left,
+      boxT: this.top,
       boxToPointer: null,
       boxCanDrag: this.canDrag,
       boxPointCanDrag: false,
