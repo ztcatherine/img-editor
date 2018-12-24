@@ -1,0 +1,43 @@
+{
+  "canvasW": 680,
+  "canvasH": 1701,
+  "text": [
+    {
+      "text": "双击编辑1",
+      "width": 200,
+      "height": 30,
+      "fontSize": "",
+      "left": 20,
+      "top": 20,
+      "color": "red",
+      "fontFamily": "宋体"
+    },
+    {
+      "text": "全场满减",
+      "width": 304,
+      "height": 77,
+      "left": 187,
+      "top": 668,
+      "fontSize": "",
+      "color": "white",
+      "fontFamily": "FZshangKuS-R-GB"
+    }
+  ],
+  "box": [
+    {
+      "width": 200,
+      "height": 200,
+      "left": 200,
+      "top": 200,
+      "url":"a.png"
+    },
+    {
+      "width": 200,
+      "height": 200,
+      "left": 500,
+      "top": 500,
+      "borderW": 2,
+      "url":"b.png"
+    }
+  ]
+}
