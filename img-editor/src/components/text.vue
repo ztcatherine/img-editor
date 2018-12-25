@@ -113,13 +113,14 @@ export default {
       }
     },
     boxMouseDown(e) {
+      this.clearFs = true
       var Alltextbox = document.getElementsByClassName("box-text");
       var box = Alltextbox[this.index];
       if(box.textContent=='    '){
          box.contentEditable="true"
       }
       this.$emit("textClick", {
-        canDrag: true
+        canDrag: true,
       });
       this.$emit("change", {
         index: this.index

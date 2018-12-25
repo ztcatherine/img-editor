@@ -433,7 +433,7 @@ export default {
       this.arry.text[status.index].text = status.text;
     },
     inputChange(value) {
-      debugger;
+      debugger
       var textbox = document.getElementsByClassName("box-text");
       for (var i = 0; i < textbox.length; i++) {
         if (textbox[i].style.border !== "none") {
