@@ -1,15 +1,16 @@
 <template>
-  <div class="box-text" ref="box" :style="sty" :class="cla" @mousedown="boxMouseDown">
+  <div class="box-text" contentEditable="true" ref="box" :style="sty" :class="cla" @mousedown="boxMouseDown" @keydown.8="del">
     <span class="point" @mousedown="pointMouseDown('LT')"></span>
     <span class="point" @mousedown="pointMouseDown('RT')"></span>
     <span class="point" @mousedown="pointMouseDown('LB')"></span>
     <span class="point" @mousedown="pointMouseDown('RB')"></span>
-    <div>{{tex}}</div>
+    <span class="ftext">{{tex}}</span>
     <!-- <slot></slot> -->
   </div>
 </template>
 <script>
 import { getElemOffset, getPointerToElem } from "../libs/utils.js";
+import $ from "jquery";
 
 export default {
   name: "boxText",
@@ -101,7 +102,22 @@ export default {
   },
 
   methods: {
+    del(){
+      debugger
+      var Alltextbox = document.getElementsByClassName("box-text");
+      var box = Alltextbox[this.index];
+      if(box.textContent=='    '){
+        box.contentEditable="false"
+      }else{
+        box.contentEditable="true"
+      }
+    },
     boxMouseDown(e) {
+      var Alltextbox = document.getElementsByClassName("box-text");
+      var box = Alltextbox[this.index];
+      if(box.textContent=='    '){
+         box.contentEditable="true"
+      }
       this.$emit("textClick", {
         canDrag: true
       });
@@ -162,6 +178,7 @@ export default {
       Allpoint[i].style.display = "none";
     }
     var box = Alltextbox[this.index];
+
     box.addEventListener("mouseenter", e => {
       for (var i = 0; i < Alltextbox.length; i++) {
         if (Alltextbox[i].style.border !== "none") {
@@ -288,14 +305,14 @@ export default {
         });
       }
       this.$emit("textChange", {
-          width: this.boxW,
-          height: this.boxH,
-          left: this.boxL,
-          top: this.boxT,
-          font: this.boxH,
-          index: this.index,
-          text: box.innerText
-        });
+        width: this.boxW,
+        height: this.boxH,
+        left: this.boxL,
+        top: this.boxT,
+        font: this.boxH,
+        index: this.index,
+        text: box.innerText
+      });
     });
 
     d.addEventListener("mouseup", () => {
@@ -306,25 +323,17 @@ export default {
       this.boxRTPointCanDrag = false;
       this.boxRBPointCanDrag = false;
     });
-    // var box = Alltextbox[this.index];
-    // d.addEventListener("blur", () => {
-    //   debugger
-    //   this.$emit("textChange", {
-    //     width: this.boxW,
-    //     height: this.boxH,
-    //     left: this.boxL,
-    //     top: this.boxT,
-    //     font: this.boxH,
-    //     index: this.index,
-    //     text: box.innerText
-    //   });
-    // });
   }
 };
 </script>
 <style>
 .box-text {
   outline: none;
+}
+.ftext{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 </style>
 

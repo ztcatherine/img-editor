@@ -49,7 +49,6 @@
                   v-for="(item,index) in arry.text"
                   :index="index"
                   :key="index"
-                  contenteditable="true"
                   :width="item.width"
                   :height="item.height"
                   :show="showText"
@@ -156,6 +155,7 @@ export default {
       cshow: false,
       helpshow: false,
       activeName: "1",
+      contented:true,
       canvasImg: "",
       showImg: false,
       arry: {},
@@ -463,7 +463,6 @@ export default {
 
     // mask
     maskClick(e) {
-      debugger;
       if (e.target.className == "wrap" || e.target.className == "mask") {
         var Alltextbox = document.getElementsByClassName("box-text");
         var Allbox = document.getElementsByClassName("box");
