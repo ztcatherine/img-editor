@@ -155,7 +155,7 @@ export default {
       cshow: false,
       helpshow: false,
       activeName: "1",
-      contented:true,
+      contented: true,
       canvasImg: "",
       showImg: false,
       arry: {},
@@ -433,7 +433,7 @@ export default {
       this.arry.text[status.index].text = status.text;
     },
     inputChange(value) {
-      debugger
+      debugger;
       var textbox = document.getElementsByClassName("box-text");
       for (var i = 0; i < textbox.length; i++) {
         if (textbox[i].style.border !== "none") {
@@ -484,6 +484,18 @@ export default {
     priviewCanvas() {
       debugger;
       var _this = this;
+      var Alltextbox = document.getElementsByClassName("box-text");
+      var Allbox = document.getElementsByClassName("box");
+      var Allpoint = document.getElementsByClassName("point");
+      for (var i = 0; i < Alltextbox.length; i++) {
+        Alltextbox[i].style.border = "none";
+      }
+      for (var i = 0; i < Allbox.length; i++) {
+        Allbox[i].style.border = "none";
+      }
+      for (var i = 0; i < Allpoint.length; i++) {
+        Allpoint[i].style.display = "none";
+      }
       var imgEditor = document.getElementsByClassName("panel")[0];
       html2canvas(imgEditor).then(function(canvas) {
         _this.canvasImg = canvas.toDataURL("image/jpeg", 1.0);
@@ -493,6 +505,18 @@ export default {
     download() {
       debugger;
       var _this = this;
+      var Alltextbox = document.getElementsByClassName("box-text");
+      var Allbox = document.getElementsByClassName("box");
+      var Allpoint = document.getElementsByClassName("point");
+      for (var i = 0; i < Alltextbox.length; i++) {
+        Alltextbox[i].style.border = "none";
+      }
+      for (var i = 0; i < Allbox.length; i++) {
+        Allbox[i].style.border = "none";
+      }
+      for (var i = 0; i < Allpoint.length; i++) {
+        Allpoint[i].style.display = "none";
+      }
       var imgEditor = document.getElementsByClassName("panel")[0];
       html2canvas(imgEditor).then(function(canvas) {
         var pageData = canvas.toDataURL("image/jpeg", 1.0);
