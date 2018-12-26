@@ -12,8 +12,7 @@
     <span class="point" @mousedown="pointMouseDown('RT')"></span>
     <span class="point" @mousedown="pointMouseDown('LB')"></span>
     <span class="point" @mousedown="pointMouseDown('RB')"></span>
-    <span class="ftext">{{tex}}</span>
-    <!-- <slot></slot> -->
+    <div class="ftext">{{tex}}</div>
   </div>
 </template>
 <script>
