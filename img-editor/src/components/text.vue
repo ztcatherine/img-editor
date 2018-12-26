@@ -1,5 +1,13 @@
 <template>
-  <div class="box-text" contentEditable="true" ref="box" :style="sty" :class="cla" @mousedown="boxMouseDown" @keydown.8="del">
+  <div
+    class="box-text"
+    contenteditable="true"
+    ref="box"
+    :style="sty"
+    :class="cla"
+    @mousedown="boxMouseDown"
+    @keydown.8="del"
+  >
     <span class="point" @mousedown="pointMouseDown('LT')"></span>
     <span class="point" @mousedown="pointMouseDown('RT')"></span>
     <span class="point" @mousedown="pointMouseDown('LB')"></span>
@@ -102,25 +110,38 @@ export default {
   },
 
   methods: {
-    del(){
-      debugger
+    del() {
+      debugger;
       var Alltextbox = document.getElementsByClassName("box-text");
       var box = Alltextbox[this.index];
-      if(box.textContent=='    '){
-        box.contentEditable="false"
-      }else{
-        box.contentEditable="true"
+      if (box.textContent == "    ") {
+        box.contentEditable = "false";
+      } else {
+        box.contentEditable = "true";
       }
     },
     boxMouseDown(e) {
-      this.clearFs = true
+      this.clearFs = true;
       var Alltextbox = document.getElementsByClassName("box-text");
       var box = Alltextbox[this.index];
-      if(box.textContent=='    '){
-         box.contentEditable="true"
+      if (box.textContent == "    ") {
+        box.contentEditable = "true";
+      }
+      for (var i = 0; i < Alltextbox.length; i++) {
+        if (this.index == i) {
+          var point = Alltextbox[i].getElementsByClassName("point");
+          for (var z = 0; z < point.length; z++) {
+            point[z].style.display = "inline-block";
+          }
+        } else {
+          var point = Alltextbox[i].getElementsByClassName("point");
+          for (var j = 0; j < point.length; j++) {
+            point[j].style.display = "none";
+          }
+        }
       }
       this.$emit("textClick", {
-        canDrag: true,
+        canDrag: true
       });
       this.$emit("change", {
         index: this.index
@@ -181,6 +202,7 @@ export default {
     var box = Alltextbox[this.index];
 
     box.addEventListener("mouseenter", e => {
+      debugger;
       for (var i = 0; i < Alltextbox.length; i++) {
         if (Alltextbox[i].style.border !== "none") {
           Alltextbox[i].style.border = "none";
@@ -196,12 +218,7 @@ export default {
         }
       }
       for (var i = 0; i < Alltextbox.length; i++) {
-        if (this.index == i) {
-          var point = Alltextbox[i].getElementsByClassName("point");
-          for (var z = 0; z < point.length; z++) {
-            point[z].style.display = "inline-block";
-          }
-        } else {
+        if (this.index !== i) {
           var point = Alltextbox[i].getElementsByClassName("point");
           for (var j = 0; j < point.length; j++) {
             point[j].style.display = "none";
@@ -331,7 +348,7 @@ export default {
 .box-text {
   outline: none;
 }
-.ftext{
+.ftext {
   display: inline-block;
   width: 100%;
   height: 100%;

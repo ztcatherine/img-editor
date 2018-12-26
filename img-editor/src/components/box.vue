@@ -4,7 +4,7 @@
     <span class="point" @mousedown="pointMouseDown('RT')"></span>
     <span class="point" @mousedown="pointMouseDown('LB')"></span>
     <span class="point" @mousedown="pointMouseDown('RB')"></span>
-    <slot></slot> 
+    <slot></slot>
   </div>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
     "canDrag",
     "canvas",
     "borderColor",
-    "borderRadius",
+    "borderRadius"
   ],
   data() {
     return {
@@ -48,7 +48,7 @@ export default {
       boxStopB: null,
       boxStopW: null,
       boxStopH: null,
-      bgurl:this.backgroundImage,
+      bgurl: this.backgroundImage
     };
   },
 
@@ -87,16 +87,30 @@ export default {
     height() {
       this.boxH = this.height;
     },
-    backgroundImage(){
-      this.bgurl = this.backgroundImage
-    },
+    backgroundImage() {
+      this.bgurl = this.backgroundImage;
+    }
   },
 
   methods: {
     boxMouseDown(e) {
+      var Allbox = document.getElementsByClassName("box");
+      for (var i = 0; i < Allbox.length; i++) {
+        if (this.Imgindex == i) {
+          var point = Allbox[i].getElementsByClassName("point");
+          for (var z = 0; z < point.length; z++) {
+            point[z].style.display = "inline-block";
+          }
+        } else {
+          var point = Allbox[i].getElementsByClassName("point");
+          for (var j = 0; j < point.length; j++) {
+            point[j].style.display = "none";
+          }
+        }
+      }
       this.$emit("boxClick", {
-          canDrag: false
-        });
+        canDrag: false
+      });
       this.boxToPointer = getPointerToElem(e, this.$refs.box);
       if (e.target.className !== "point") {
         this.boxCanDrag = true;
@@ -163,12 +177,7 @@ export default {
         }
       }
       for (var i = 0; i < Allbox.length; i++) {
-        if (this.Imgindex == i) {
-          var point = Allbox[i].getElementsByClassName("point");
-          for (var z = 0; z < point.length; z++) {
-            point[z].style.display = "inline-block";
-          }
-        } else {
+        if (this.Imgindex !== i) {
           var point = Allbox[i].getElementsByClassName("point");
           for (var j = 0; j < point.length; j++) {
             point[j].style.display = "none";
@@ -203,7 +212,7 @@ export default {
           }
         }
         if (top >= 0 && top <= moveT) {
-           this.boxT = top;
+          this.boxT = top;
         } else {
           if (top < 0) {
             this.boxT = 0;
@@ -216,8 +225,8 @@ export default {
           height: this.boxH,
           left: this.boxL,
           top: this.boxT,
-          index:this.Imgindex,
-          backgroundImage:this.bgurl,
+          index: this.Imgindex,
+          backgroundImage: this.bgurl
         });
       }
       if (this.boxPointCanDrag) {
@@ -267,8 +276,8 @@ export default {
           height: this.boxH,
           left: this.boxL,
           top: this.boxT,
-          index:this.Imgindex,
-          backgroundImage:this.bgurl,
+          index: this.Imgindex,
+          backgroundImage: this.bgurl
         });
       }
     });
