@@ -52,7 +52,6 @@
                   :width="item.width"
                   :height="item.height"
                   :show="showText"
-                  :fs="item.fontSize"
                   :left="item.left"
                   :top="item.top"
                   :fontFamily="item.fontFamily"
@@ -426,18 +425,19 @@ export default {
       this.arry.box[status.index].url = status.backgroundImage;
     },
     textChange(status) {
+      debugger;
       this.arry.text[status.index].width = status.width;
       this.arry.text[status.index].height = status.height;
       this.arry.text[status.index].left = status.left;
       this.arry.text[status.index].top = status.top;
       this.arry.text[status.index].text = status.text;
+      this.fsvalue = status.height;
     },
     inputChange(value) {
-      debugger;
       var textbox = document.getElementsByClassName("box-text");
       for (var i = 0; i < textbox.length; i++) {
         if (textbox[i].style.border !== "none") {
-          this.arry.text[i].fontSize = value;
+          this.arry.text[i].height = parseFloat(value);
         }
       }
     },

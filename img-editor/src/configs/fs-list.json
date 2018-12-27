@@ -1,90 +1,90 @@
 [{
   "name": "6",
-  "value": "6px",
+  "value": "6",
   "idx": 0
 }, {
   "name": "8",
-  "value": "8px",
+  "value": "8",
   "idx": 1
 }, {
   "name": "9",
-  "value": "9px",
+  "value": "9",
   "idx": 2
 }, {
   "name": "10",
-  "value": "10px",
+  "value": "10",
   "idx": 3
 }, {
   "name": "11",
-  "value": "11px",
+  "value": "11",
   "idx": 4
 }, {
   "name": "12",
-  "value": "12px",
+  "value": "12",
   "idx": 5
 }, {
   "name": "14",
-  "value": "14px",
+  "value": "14",
   "idx": 6
 },
 {
   "name": "16",
-  "value": "16px",
+  "value": "16",
   "idx": 7
 },
 {
   "name": "18",
-  "value": "18px",
+  "value": "18",
   "idx": 8
 },
 {
   "name": "24",
-  "value": "24px",
+  "value": "24",
   "idx": 9
 },
 {
   "name": "30",
-  "value": "30px",
+  "value": "30",
   "idx": 10
 },
 {
   "name": "36",
-  "value": "36px",
+  "value": "36",
   "idx": 11
 },
 {
   "name": "48",
-  "value": "48px",
+  "value": "48",
   "idx": 12
 },
 {
   "name": "60",
-  "value": "60px",
+  "value": "60",
   "idx": 13
 },
 {
   "name": "72",
-  "value": "72px",
+  "value": "72",
   "idx": 14
 },
 {
   "name": "84",
-  "value": "84px",
+  "value": "84",
   "idx": 15
 },
 {
   "name": "96",
-  "value": "96px",
+  "value": "96",
   "idx": 16
 },
 {
   "name": "108",
-  "value": "108px",
+  "value": "108",
   "idx": 17
 },
 {
   "name": "120",
-  "value": "120px",
+  "value": "120",
   "idx": 18
 }
 ]

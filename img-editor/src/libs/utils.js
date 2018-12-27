@@ -35,6 +35,7 @@ let getPointerToElem = function(ev, elem) {
   let top = pointerOffset.top - elemOffsetToView.top
   let right = elemOffsetToView.width - left
   let bottom = elemOffsetToView.height - top
+  console.log(left+","+top+","+right+","+bottom)
   return {
     left: left,
     top: top,

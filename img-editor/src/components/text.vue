@@ -26,7 +26,6 @@ export default {
     "width",
     "height",
     "lineHeight",
-    "fs",
     "left",
     "index",
     "text",
@@ -44,7 +43,7 @@ export default {
   data() {
     return {
       boxW: this.width,
-      boxH: this.fs || this.height,
+      boxH: this.height,
       boxL: this.left,
       boxT: this.top,
       boxToPointer: null,
@@ -60,9 +59,7 @@ export default {
       boxStopB: null,
       boxStopW: null,
       boxStopH: null,
-      font: 30,
-      tex: this.text,
-      fontS: this.fs
+      tex: this.text
     };
   },
 
@@ -72,8 +69,8 @@ export default {
         left: this.boxL + "px",
         top: this.boxT + "px",
         width: this.boxW + "px",
-        height: this.fontS || this.boxH + "px",
-        fontSize: this.fontS || this.boxH - 2 + "px",
+        height: this.boxH + "px",
+        fontSize: this.boxH - 2 + "px",
         lineHeight: 1,
         color: this.color,
         "font-family": this.fontFamily,
@@ -99,12 +96,6 @@ export default {
     },
     height() {
       this.boxH = this.height;
-    },
-    font() {
-      this.font = this.height;
-    },
-    fs() {
-      this.fontS = this.fs;
     }
   },
 
@@ -139,6 +130,14 @@ export default {
           }
         }
       }
+      this.$emit("textChange", {
+        width: this.boxW,
+        height: this.boxH,
+        left: this.boxL,
+        top: this.boxT,
+        index: this.index,
+        text: box.innerText
+      });
       this.$emit("textClick", {
         canDrag: true
       });
@@ -201,7 +200,6 @@ export default {
     var box = Alltextbox[this.index];
 
     box.addEventListener("mouseenter", e => {
-      debugger;
       for (var i = 0; i < Alltextbox.length; i++) {
         if (Alltextbox[i].style.border !== "none") {
           Alltextbox[i].style.border = "none";
@@ -236,100 +234,97 @@ export default {
     let d = document;
     let offset, left, top, moveL, moveT;
     d.addEventListener("mousemove", e => {
-      if (this.boxCanDrag) {
-        offset = getPointerToElem(e, this.canvas);
-        left = offset.left - this.boxToPointer.left;
-        top = offset.top - this.boxToPointer.top;
-        moveL = this.canvasW - parseFloat(this.sty.width);
-        moveT = this.canvasH - parseFloat(this.sty.height);
+      var _this = this;
+      if (_this.boxCanDrag) {
+        offset = getPointerToElem(e, _this.canvas);
+        left = offset.left - _this.boxToPointer.left;
+        top = offset.top - _this.boxToPointer.top;
+        moveL = _this.canvasW - parseFloat(_this.boxW);
+        moveT = _this.canvasH - parseFloat(_this.boxH);
         if (left >= 0 && left <= moveL) {
-          this.boxL = left;
+          _this.boxL = left;
         } else {
           if (left < 0) {
-            this.boxL = 0;
+            _this.boxL = 0;
           } else {
-            this.boxL = moveL;
+            _this.boxL = moveL;
           }
         }
         if (top >= 0 && top <= moveT) {
-          this.boxT = top;
+          _this.boxT = top;
         } else {
           if (top < 0) {
-            this.boxT = 0;
+            _this.boxT = 0;
           } else {
-            this.boxT = moveT;
+            _this.boxT = moveT;
           }
         }
-        this.$emit("textChange", {
-          width: this.boxW,
-          height: this.boxH,
-          left: this.boxL,
-          top: this.boxT,
-          index: this.index,
+        _this.$emit("textChange", {
+          width: _this.boxW,
+          height: _this.boxH,
+          left: _this.boxL,
+          top: _this.boxT,
+          index: _this.index,
           text: box.innerText
         });
       }
-      if (this.boxPointCanDrag) {
-        offset = getPointerToElem(e, this.canvas);
-        if (this.boxLTPointCanDrag) {
+      if (_this.boxPointCanDrag) {
+        offset = getPointerToElem(e, _this.canvas);
+        if (_this.boxLTPointCanDrag) {
           if (offset.left >= 0) {
-            this.boxL = offset.left;
-            this.boxW = this.boxStopL - offset.left + this.boxStopW;
+            _this.boxL = offset.left;
+            _this.boxW = _this.boxStopL - offset.left + _this.boxStopW;
           }
           if (offset.top >= 0) {
-            this.boxT = offset.top;
-            this.boxH = this.boxStopT - offset.top + this.boxStopH;
+            _this.boxT = offset.top;
+            _this.boxH = _this.boxStopT - offset.top + _this.boxStopH;
           }
         }
-        if (this.boxRTPointCanDrag) {
+        if (_this.boxRTPointCanDrag) {
           if (offset.right >= 0) {
-            this.boxR = offset.right;
-            this.boxW = this.boxStopR - offset.right + this.boxStopW;
+            _this.boxR = offset.right;
+            _this.boxW = _this.boxStopR - offset.right + _this.boxStopW;
           }
           if (offset.top >= 0) {
-            this.boxT = offset.top;
-            this.boxH = this.boxStopT - offset.top + this.boxStopH;
+            _this.boxT = offset.top;
+            _this.boxH = _this.boxStopT - offset.top + _this.boxStopH;
           }
         }
-        if (this.boxLBPointCanDrag) {
+        if (_this.boxLBPointCanDrag) {
           if (offset.left >= 0) {
-            this.boxL = offset.left;
-            this.boxW = this.boxStopL - offset.left + this.boxStopW;
+            _this.boxL = offset.left;
+            _this.boxW = _this.boxStopL - offset.left + _this.boxStopW;
           }
           if (offset.bottom >= 0) {
-            this.boxB = offset.bottom;
-            this.boxH = this.boxStopB - offset.bottom + this.boxStopH;
+            _this.boxB = offset.bottom;
+            _this.boxH = _this.boxStopB - offset.bottom + _this.boxStopH;
           }
         }
-        if (this.boxRBPointCanDrag) {
+        if (_this.boxRBPointCanDrag) {
+          console.log(
+            _this.boxStopR + "," + offset.right + "," + _this.boxStopW
+          );
+          console.log(
+            _this.boxStopB + "," + offset.bottom + "," + _this.boxStopH
+          );
           if (offset.right >= 0) {
-            this.boxR = offset.right;
-            this.boxW = this.boxStopR - offset.right + this.boxStopW;
+            _this.boxR = offset.right;
+            _this.boxW = _this.boxStopR - offset.right + _this.boxStopW;
           }
           if (offset.bottom >= 0) {
-            this.boxB = offset.bottom;
-            this.boxH = this.boxStopB - offset.bottom + this.boxStopH;
+            _this.boxB = offset.bottom;
+            _this.boxH = _this.boxStopB - offset.bottom + _this.boxStopH;
           }
         }
-        this.$emit("textChange", {
-          width: this.boxW,
-          height: this.boxH,
-          left: this.boxL,
-          top: this.boxT,
-          font: this.boxH,
-          index: this.index,
+        _this.$emit("textChange", {
+          width: _this.boxW,
+          height: _this.boxH,
+          left: _this.boxL,
+          top: _this.boxT,
+          index: _this.index,
           text: box.innerText
         });
       }
-      this.$emit("textChange", {
-        width: this.boxW,
-        height: this.boxH,
-        left: this.boxL,
-        top: this.boxT,
-        font: this.boxH,
-        index: this.index,
-        text: box.innerText
-      });
     });
 
     d.addEventListener("mouseup", () => {
