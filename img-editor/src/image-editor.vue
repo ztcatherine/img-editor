@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 100%;">
-    <div class="help-mask" v-show="helpshow" @click="hidehelp">
+    <!-- <div class="help-mask" v-show="helpshow" @click="hidehelp">
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item title="文字如何编辑？" name="1">
           <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
@@ -24,7 +24,7 @@
           <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
         </el-collapse-item>
       </el-collapse>
-    </div>
+    </div> -->
     <div class="mobile-wrap" v-show="showImg" @click="hideImg">
       <div style="position:relative;">
         <img :src="canvasImg">
@@ -110,12 +110,12 @@
         <div id="replace">替换图片</div>
         <input type="file" id="uploadFile" @change="readLocalFile">
       </div>
-      <div class="bottom-wrap" @click="help">
+      <!-- <div class="bottom-wrap" @click="help">
         <div class="help-wrap">
           <img src="./assert/help.png" class="help">
         </div>
         <div>帮助</div>
-      </div>
+      </div> -->
     </el-aside>
   </el-container>
 </template>
@@ -447,16 +447,16 @@ export default {
     boxClick(status) {
       this.cshow = status.canDrag;
     },
-    help() {
-      if (this.helpshow == true) {
-        this.helpshow = false;
-      } else {
-        this.helpshow = true;
-      }
-    },
-    hidehelp() {
-      this.helpshow = false;
-    },
+    // help() {
+    //   if (this.helpshow == true) {
+    //     this.helpshow = false;
+    //   } else {
+    //     this.helpshow = true;
+    //   }
+    // },
+    // hidehelp() {
+    //   this.helpshow = false;
+    // },
     resetpage() {
       window.window.location.reload();
     },
